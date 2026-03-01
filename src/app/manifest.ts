@@ -18,6 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: 'any',
       },
       {
+        // Declared separately as maskable so installable PWAs can crop it
         src: '/icon.png',
         sizes: '1024x1024',
         type: 'image/png',

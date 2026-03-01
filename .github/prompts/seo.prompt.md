@@ -92,7 +92,12 @@ export default function manifest(): MetadataRoute.Manifest {
     display: 'standalone',
     background_color: site.bg,
     theme_color: site.accent,
-    icons: [{ src: '/icon.png', sizes: '1024x1024', type: 'image/png', purpose: 'any maskable' }],
+    // Note: 'any maskable' combined is NOT a valid TypeScript type in Next.js 16+.
+    // Declare 'any' and 'maskable' as separate entries.
+    icons: [
+      { src: '/icon.png', sizes: '1024x1024', type: 'image/png', purpose: 'any' },
+      { src: '/icon.png', sizes: '1024x1024', type: 'image/png', purpose: 'maskable' },
+    ],
   };
 }
 ```
