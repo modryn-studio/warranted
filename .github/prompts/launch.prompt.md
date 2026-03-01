@@ -49,7 +49,11 @@ twitter: {
 **Dynamic OG images** — check whether `src/app/opengraph-image.tsx` exists. If not, create it using `next/og` `ImageResponse`. Also check key non-home pages (e.g. `/how-it-works`, `/about`, any tool/product page) — if they only inherit the root OG image, generate per-page `opengraph-image.tsx` files with headlines that match each page's purpose:
 ```tsx
 import { ImageResponse } from 'next/og';
+import { site } from '@/config/site';
 
+// IMPORTANT: Remove `export const runtime = 'edge'` if this image reads from the
+// filesystem (e.g. MDX files, JSON content directories). Edge runtime cannot use
+// Node.js APIs — use it only for purely static OG images that don't read files.
 export const runtime = 'edge';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
@@ -57,15 +61,15 @@ export const contentType = 'image/png';
 export default async function Image() {
   return new ImageResponse(
     (
-      <div style={{ background: '#111111', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px', fontFamily: 'sans-serif' }}>
+      <div style={{ background: site.bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px', fontFamily: 'sans-serif' }}>
         <div style={{ fontSize: 58, fontWeight: 700, color: '#ffffff', textAlign: 'center', lineHeight: 1.1, marginBottom: 24 }}>
-          <!-- page-specific headline -->
+          {/* page-specific headline */}
         </div>
         <div style={{ fontSize: 22, color: '#a1a1aa', textAlign: 'center', maxWidth: 700 }}>
-          <!-- page-specific subtext -->
+          {/* page-specific subtext */}
         </div>
         <div style={{ position: 'absolute', bottom: 40, right: 60, fontSize: 18, color: site.accent, fontWeight: 600 }}>
-          <!-- domain from site.url -->
+          {/* domain — e.g. site.url.replace('https://', '') */}
         </div>
       </div>
     ),
@@ -73,7 +77,6 @@ export default async function Image() {
   );
 }
 ```
-Use the brand accent color (`site.accent`) and background (`site.bg`) from `site.ts`.
 
 **Sharing hook at outcome** — check the success / done state of the main user flow (the screen shown after the core action completes). If there is no share button or link, add a pre-filled X/Twitter share link:
 ```tsx
@@ -94,10 +97,10 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: '<!-- H2/H3 heading as question -->',
-      acceptedAnswer: { '@type': 'Answer', text: '<!-- section content as plain text -->' },
+      name: 'H2/H3 heading as question',
+      acceptedAnswer: { '@type': 'Answer', text: 'Section content as plain text' },
     },
-    // ...
+    // repeat for each H2/H3 section
   ],
 };
 
