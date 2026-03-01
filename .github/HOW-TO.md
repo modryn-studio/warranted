@@ -126,6 +126,16 @@ Once it's running, tell Copilot **"check logs"** at any point — it reads `dev.
 
 Prerequisite: the server must be running and `dev.log` must be capturing output before Copilot can read it. If you haven't started the server yet, do that first.
 
+## Launch Sequence
+
+Run these in order when shipping this product:
+
+1. `@check` — quality gate (fix anything it flags before continuing)
+2. `/seo` — technical SEO audit and fixes
+3. `/launch` — distribution checklist: sharing hooks, OG, social, screenshots
+4. Merge the `/log` and `/tool` PRs on modryn-studio-v2
+5. Switch to **modryn-studio-v2** and run `/social` — that's where voice rules live
+
 ## Day-to-Day Workflow
 
 1. **Plan** → use Plan mode to scope the feature

@@ -47,7 +47,8 @@ Read through the codebase and check for ALL of the following:
 - [ ] No hardcoded API keys, secrets, tokens, or passwords in source files
 - [ ] Environment variables used for all sensitive values
 - [ ] `.env` files are in `.gitignore`
-- [ ] `NEXT_PUBLIC_GA_MEASUREMENT_ID` is present in `.env.local` — without it GA4 silently won’t fire (WARN if missing, not FAIL)
+- [ ] `NEXT_PUBLIC_GA_MEASUREMENT_ID` is present in `.env.local` — without it GA4 silently won't fire (WARN if missing, not FAIL)
+- [ ] `.env.example` is in sync with `.env.local` — every key in `.env.local` should have a placeholder entry in `.env.example`. WARN if `.env.example` is missing. FAIL if `.env.local` has keys not documented in `.env.example` — undocumented secrets break fresh clones and deployment.
 
 **Code Quality**
 - [ ] No `console.log` statements left in production code (console.error/warn are OK)
@@ -94,7 +95,7 @@ Run in terminal:
 ```
 npx next lint --fix
 ```
-If lint errors remain that can’t be auto-fixed, document them in the report.
+If lint errors remain that can't be auto-fixed, document them in the report.
 
 ### Phase 4: Build
 Run in terminal:
