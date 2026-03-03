@@ -1,3 +1,14 @@
+/**
+ * Stripe Checkout Sessions — upgrade path from Payment Links.
+ *
+ * Only needed when you require dynamic pricing, coupons, or programmatic
+ * control over checkout. For simple one-time payments, use Stripe Payment
+ * Links instead (no server code needed — see pay-gate.tsx).
+ *
+ * Prerequisites:
+ *   npm install stripe
+ *   .env.local: STRIPE_SECRET_KEY, STRIPE_PRICE_ID
+ */
 import { createRouteLogger } from '@/lib/route-logger';
 import Stripe from 'stripe';
 

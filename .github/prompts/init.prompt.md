@@ -56,16 +56,37 @@ Check the `Monetization` section of `context.md`.
 Check the `Monetization` section of `context.md`.
 
 **If monetization is `one-time-payment`**:
-1. Install Stripe: run `npm install stripe` in the terminal
-2. Verify `src/app/api/checkout/route.ts` exists (should be in boilerplate). If not, create it using the scaffold pattern.
-3. Verify `src/components/pay-gate.tsx` exists (should be in boilerplate). If not, create it using the scaffold pattern.
-4. Check that `.env.local` has `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, and `STRIPE_PRICE_ID` — if missing, warn the user to fill them in from stripe.com.
+
+### Option A: Payment Links (recommended — fastest)
+No npm packages, no API routes, no env vars needed.
+
+1. User creates a Payment Link at stripe.com → Payment Links
+2. Set the Payment Link's success URL to the tool page with `?paid=true` appended (e.g. `https://modrynstudio.com/tools/my-tool?paid=true`)
+3. Pass the Payment Link URL as the `checkoutUrl` prop on `<PayGate>`:
+   ```tsx
+   <PayGate checkoutUrl="https://buy.stripe.com/xxxxx" price="$9" valueProposition="Unlock full results">
+     {/* paid content */}
+   </PayGate>
+   ```
+4. Verify `src/components/pay-gate.tsx` exists (should be in boilerplate)
 5. Add `paymentGate` analytics event to `src/lib/analytics.ts`:
    ```ts
    paymentGate: (action: string) => track('payment_gate', { action }),
    ```
 
-**If monetization is `email-only` or `none`**: skip Stripe entirely. Do not install the package.
+### Option B: Checkout Sessions (upgrade path)
+Use when you need dynamic pricing, coupons, or programmatic control.
+
+1. Install Stripe: run `npm install stripe` in the terminal
+2. Verify `src/app/api/checkout/route.ts` exists (should be in boilerplate)
+3. Verify `src/components/pay-gate.tsx` exists. Do NOT pass a `checkoutUrl` prop — it will fall back to the /api/checkout route automatically.
+4. Check that `.env.local` has `STRIPE_SECRET_KEY` and `STRIPE_PRICE_ID` — if missing, warn the user to fill them in from stripe.com
+5. Add `paymentGate` analytics event to `src/lib/analytics.ts`:
+   ```ts
+   paymentGate: (action: string) => track('payment_gate', { action }),
+   ```
+
+**If monetization is `email-only` or `none`**: skip Stripe entirely. Do not install any Stripe packages.
 
 ---
 

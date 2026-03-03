@@ -12,17 +12,30 @@ interface PayGateProps {
   valueProposition: string;
   /** Price display string, e.g. "$9" */
   price: string;
+  /**
+   * Stripe Payment Link URL (recommended — no server code needed).
+   * Create one at stripe.com → Payment Links. Set the success_url to your
+   * tool page with ?paid=true appended (e.g. https://modrynstudio.com/tools/my-tool?paid=true).
+   *
+   * When omitted, falls back to POST /api/checkout (Checkout Sessions —
+   * requires `stripe` npm package + STRIPE_SECRET_KEY + STRIPE_PRICE_ID env vars).
+   */
+  checkoutUrl?: string;
 }
 
 /**
  * Local-first pay gate.
  * Checks localStorage for a payment receipt. If found, renders children.
- * If not, shows a gate with a Stripe Checkout redirect button.
+ * If not, shows a gate with a payment button.
+ *
+ * Two modes:
+ * 1. Payment Links (default) — pass a `checkoutUrl` prop. No server code needed.
+ * 2. Checkout Sessions — omit `checkoutUrl`. Requires /api/checkout route + env vars.
  *
  * After Stripe redirects back with ?paid=true, stores the receipt
  * in localStorage and reveals the content. No accounts, no database.
  */
-export default function PayGate({ children, valueProposition, price }: PayGateProps) {
+export default function PayGate({ children, valueProposition, price, checkoutUrl }: PayGateProps) {
   const [hasPaid, setHasPaid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -41,6 +54,7 @@ export default function PayGate({ children, valueProposition, price }: PayGatePr
     if (params.get('paid') === 'true') {
       localStorage.setItem(RECEIPT_KEY, new Date().toISOString());
       setHasPaid(true);
+      analytics.track('payment_gate', { action: 'payment_completed' });
       // Clean up URL
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -52,6 +66,13 @@ export default function PayGate({ children, valueProposition, price }: PayGatePr
     setLoading(true);
     analytics.track('payment_gate', { action: 'checkout_click' });
 
+    // Payment Links mode — navigate directly to the Stripe-hosted link
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+      return;
+    }
+
+    // Checkout Sessions mode — POST to /api/checkout for a session URL
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',

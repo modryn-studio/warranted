@@ -23,8 +23,13 @@
 ## Monetization
 <!-- How does this product make money? Pick one:
      - `email-only`        → Free tool, capture emails for future launches (default)
-     - `one-time-payment`  → Pay once, use forever (Stripe Checkout)
-     - `none`              → No email capture, no payment — pure SEO/traffic play -->
+     - `one-time-payment`  → Pay once, use forever (Stripe)
+     - `none`              → No email capture, no payment — pure SEO/traffic play
+
+     If `one-time-payment`:
+       Fast path (default): create a Payment Link in Stripe Dashboard, pass URL to <PayGate>.
+       No server code, no env vars, no npm package.
+       Upgrade path: /api/checkout route for dynamic pricing (needs `stripe` npm + env vars). -->
 
 ## Target Subreddits
 <!-- Subreddits where the target user's pain lives.
