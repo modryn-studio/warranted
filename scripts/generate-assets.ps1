@@ -10,18 +10,13 @@
 #
 #   REQUIRED:
 #   public/brand/logomark.png       1024×1024 recommended.
-#                                   Use a COLORED mark that works on both light
-#                                   and dark backgrounds, OR a dark mark on
-#                                   transparent bg if you want the auto-invert
-#                                   dual-favicon mode (see below).
 #
-#   OPTIONAL — enables dual favicon mode:
-#   public/brand/logomark-dark.png  Your mark as it should appear on dark
-#                                   backgrounds (e.g. white/light-colored).
-#                                   If this file exists, the script uses both
-#                                   files for light/dark favicon switching.
-#                                   If absent, logomark.png is used for both
-#                                   modes (good for colored marks).
+#   OPTIONAL — explicit dark-mode favicon override:
+#   public/brand/logomark-dark.png  Overrides the auto-detected dark favicon.
+#                                   Only needed for a hand-crafted dark version.
+#                                   If absent, the script auto-detects mark type:
+#                                   colored marks reuse logomark.png for both;
+#                                   grayscale marks (black/white) auto-invert.
 #
 #   OPTIONAL — skipped if missing, auto-generated:
 #   public/brand/banner.png         1280×320 README header image.
@@ -65,8 +60,8 @@ if (-not (Get-Command magick -ErrorAction SilentlyContinue)) {
 }
 
 # ── Read site name + brand colors from site.ts ───────────────────────────────
-$siteName   = "Your Site"
-$bgColor    = "#111111"
+$siteName    = "Your Site"
+$bgColor     = "#111111"
 $accentColor = "#6366f1"
 $siteTs = "src\config\site.ts"
 if (Test-Path $siteTs) {
@@ -93,37 +88,51 @@ Write-Host ""
 Write-Host "  Generating assets - site: $siteName" -ForegroundColor Cyan
 Write-Host ""
 
+# ── Detect mark type ─────────────────────────────────────────────────────────
+# Reads max channel saturation from the logomark. Near-zero = grayscale
+# (black, white, gray) — needs inversion when composited onto a dark bg.
+# Colored marks (amber, blue, etc.) composite directly, no inversion.
+$maxSat      = [float](magick $logomark -colorspace HSL -channel Saturation -separate -format "%[fx:maxima]" info: 2>$null)
+$isGrayscale = $maxSat -lt 0.05
+$negateFrag  = if ($isGrayscale) { @('-channel', 'RGB', '-negate') } else { @() }
+
 # ── Favicon pair ─────────────────────────────────────────────────────────────
-# DUAL MODE   — public/brand/logomark-dark.png exists:
-#               icon-light.png = logomark.png (your dark/colored mark)
-#               icon-dark.png  = logomark-dark.png (your light/white mark)
+# DUAL MODE   — public/brand/logomark-dark.png exists (explicit override):
+#               icon-light.png = logomark.png
+#               icon-dark.png  = logomark-dark.png
 #
-# SINGLE MODE — only logomark.png exists:
-#               icon-light.png = icon-dark.png = logomark.png
-#               Use this for colored marks that read well on any background.
+# AUTO MODE   — only logomark.png, mark is grayscale (black/white/gray):
+#               icon-light.png = logomark.png
+#               icon-dark.png  = logomark.png (RGB-negated automatically)
+#
+# SINGLE MODE — only logomark.png, mark is colored:
+#               icon-light.png = icon-dark.png = logomark.png (no change needed)
 if (Test-Path $logomarkDark) {
     Write-Host "  favicon mode: DUAL (logomark.png + logomark-dark.png)" -ForegroundColor DarkGray
     Copy-Item $logomark     "public\icon-light.png"
     Copy-Item $logomarkDark "public\icon-dark.png"
+} elseif ($isGrayscale) {
+    Write-Host "  favicon mode: AUTO (grayscale detected, inverting for dark mode)" -ForegroundColor DarkGray
+    Copy-Item $logomark "public\icon-light.png"
+    magick $logomark -channel RGB -negate "public\icon-dark.png"
 } else {
-    Write-Host "  favicon mode: SINGLE (logomark.png used for both modes)" -ForegroundColor DarkGray
-    Write-Host "  Tip: add public/brand/logomark-dark.png to enable light/dark favicon switching." -ForegroundColor DarkGray
+    Write-Host "  favicon mode: SINGLE (colored mark, used for both modes)" -ForegroundColor DarkGray
     Copy-Item $logomark "public\icon-light.png"
     Copy-Item $logomark "public\icon-dark.png"
 }
 Write-Host "  + public/icon-light.png"
 Write-Host "  + public/icon-dark.png"
 
-# ── icon.png: manifest + JSON-LD (dark bg, colored mark) ─────────────────────
+# ── icon.png: manifest + JSON-LD (dark bg, mark composited) ──────────────────
 magick -size 1024x1024 xc:"$bgColor" `
-    '(' $logomark -resize 800x800 ')' `
+    '(' $logomark $negateFrag -resize 800x800 ')' `
     -gravity Center -composite "public\icon.png"
 Write-Host "  + public/icon.png"
 
 # ── apple-icon.png: iOS home screen (dark bg, 180x180) ───────────────────────
 if (-not (Test-Path "src\app")) { New-Item -ItemType Directory -Path "src\app" | Out-Null }
 magick -size 180x180 xc:"$bgColor" `
-    '(' $logomark -resize 140x140 ')' `
+    '(' $logomark $negateFrag -resize 140x140 ')' `
     -gravity Center -composite "src\app\apple-icon.png"
 Write-Host "  + src/app/apple-icon.png"
 
@@ -133,7 +142,7 @@ Write-Host "  + public/favicon.ico"
 
 # ── og-image.png: 1200x630 social card ───────────────────────────────────────
 magick -size 1200x630 xc:"$bgColor" `
-    '(' $logomark -resize 100x100 ')' `
+    '(' $logomark $negateFrag -resize 100x100 ')' `
     -gravity North -geometry +0+75 -composite `
     -gravity North -font "Arial-Bold" -pointsize 88 -fill "#e5e5e5" -annotate +0+230 $siteName `
     -fill "$accentColor" -draw "rectangle 0,618 1200,630" `
@@ -148,7 +157,7 @@ if (Test-Path $banner) {
     Write-Host "  + public/brand/banner.png (auto-generated)"
     if (-not (Test-Path "public\brand")) { New-Item -ItemType Directory -Path "public\brand" | Out-Null }
     magick -size 1280x320 xc:"$bgColor" `
-        '(' $logomark -resize 160x160 ')' `
+        '(' $logomark $negateFrag -resize 160x160 ')' `
         -gravity West -geometry +100+0 -composite `
         -gravity West -font "Arial-Bold" -pointsize 72 -fill "#e5e5e5" -annotate +300+0 $siteName `
         $banner
