@@ -6,19 +6,30 @@
 ## Target User
 <!-- Who is it for? Be specific — describe one real person, not a demographic. -->
 
-## URL
-<!-- The deployed URL for this tool.
-     Tools live at modrynstudio.com/tools/[slug] — NOT on a separate domain or subdomain.
-     Subdirectories inherit domain authority. Subdomains and separate domains do not.
+## Deployment
+<!-- How is this project served? Pick one mode and fill in the three fields below.
 
-     This repo deploys to a free .vercel.app URL. modryn-studio-v2 rewrites
-     modrynstudio.com/tools/[slug]/* to this deployment URL. Google sees one domain.
+     MODE: modryn-app
+     Served at modrynstudio.com/tools/[slug] via rewrites in modryn-studio-v2.
+     This repo deploys to Vercel (.vercel.app URL). modryn-studio-v2 proxies
+     modrynstudio.com/tools/[slug]/* to it. Google sees one domain — good for SEO.
+     → basePath: '/tools/your-slug' in next.config.ts
+     → BASE_PATH = '/tools/your-slug' in src/lib/base-path.ts
 
-     Set basePath in this repo's next.config.ts to match the slug:
-       basePath: '/tools/your-slug'
+     MODE: standalone-subdomain
+     Served at subdomain.domain.com — its own Vercel deployment + custom subdomain DNS.
+     → Remove basePath from next.config.ts entirely
+     → BASE_PATH = '' in src/lib/base-path.ts
 
-     URL = https://modrynstudio.com/tools/your-slug
-     Exception: pre-existing brands with their own domain (e.g. specifythat.com). -->
+     MODE: standalone-domain
+     Served at its own root domain (e.g. specifythat.com).
+     → Remove basePath from next.config.ts entirely
+     → BASE_PATH = '' in src/lib/base-path.ts
+-->
+
+mode: <!-- modryn-app | standalone-subdomain | standalone-domain -->
+url:  <!-- https://modrynstudio.com/tools/your-slug -->
+basePath: <!-- /tools/your-slug   (leave empty for standalone modes) -->
 
 ## Stack Additions
 <!-- Any services beyond the boilerplate defaults (Next.js, Tailwind, Vercel, GA4)?

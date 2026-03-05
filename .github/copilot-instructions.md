@@ -3,6 +3,16 @@
 ## Who I Am
 <!-- TODO: describe yourself, your product, and your target user -->
 
+## Deployment
+<!-- Filled in by /init from context.md.
+     Read this before touching next.config.ts, BASE_PATH, site.ts, or any hardcoded URL.
+     If mode is modryn-app:         basePath must stay set in next.config.ts.
+     If mode is standalone-*:       basePath must be absent from next.config.ts. -->
+
+mode: <!-- modryn-app | standalone-subdomain | standalone-domain -->
+url:  <!-- canonical URL -->
+basePath: <!-- /tools/your-slug   (empty for standalone modes) -->
+
 ## Stack
 - Next.js 15 (App Router) with TypeScript
 - Tailwind CSS for styling
