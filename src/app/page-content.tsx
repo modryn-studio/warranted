@@ -94,7 +94,9 @@ export default function PageContent() {
             {/* Email-style header */}
             <div className="border-border flex flex-wrap items-baseline justify-between gap-2 border-b px-6 py-4">
               <span className="font-mono text-xs font-bold">Trend Briefing — 2026-03-05</span>
-              <span className="text-muted font-mono text-xs">6 clusters · 49 scored keywords · trendspy + rss + email</span>
+              <span className="text-muted font-mono text-xs">
+                6 clusters · 49 scored keywords · trendspy + rss + email
+              </span>
             </div>
 
             {/* Cluster table */}
@@ -104,10 +106,20 @@ export default function PageContent() {
               </p>
               <div className="space-y-2">
                 {[
-                  { rank: 1, name: 'Sleeping better despite time changes', score: 98, tag: 'EARLY 1d↑' },
+                  {
+                    rank: 1,
+                    name: 'Sleeping better despite time changes',
+                    score: 98,
+                    tag: 'EARLY 1d↑',
+                  },
                   { rank: 2, name: 'Making my kitchen feel cozy', score: 74, tag: 'EARLY 1d↑' },
                   { rank: 3, name: 'Quick high-protein bowl meals', score: 70, tag: 'EARLY 1d↑' },
-                  { rank: 4, name: 'Keeping up with viral pop culture', score: 65, tag: 'EARLY 3d↑' },
+                  {
+                    rank: 4,
+                    name: 'Keeping up with viral pop culture',
+                    score: 65,
+                    tag: 'EARLY 3d↑',
+                  },
                   { rank: 5, name: 'Deciding whether to buy stocks', score: 59, tag: 'EARLY' },
                   { rank: 6, name: 'Checking if school is closed', score: 48, tag: 'EARLY' },
                 ].map((c) => (
@@ -131,16 +143,20 @@ export default function PageContent() {
               <div className="mb-5">
                 <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                   <span className="text-accent font-mono text-xs font-bold">BUILD</span>
-                  <span className="font-mono text-xs font-semibold">Making my kitchen feel cozy</span>
+                  <span className="font-mono text-xs font-semibold">
+                    Making my kitchen feel cozy
+                  </span>
                   <span className="text-muted font-mono text-xs">[MED confidence]</span>
                 </div>
                 <p className="text-muted mt-1.5 font-mono text-xs leading-relaxed">
-                  Competition GREEN. Pain isn&apos;t aesthetics — it&apos;s regret-aversion. People are paralyzed by
-                  an expensive, irreversible choice (undertones, lighting, floor matching). 3 weak tools found,
-                  none solving the contractor-ready output problem. Niche execution is defensible.
+                  Competition GREEN. Pain isn&apos;t aesthetics — it&apos;s regret-aversion. People
+                  are paralyzed by an expensive, irreversible choice (undertones, lighting, floor
+                  matching). 3 weak tools found, none solving the contractor-ready output problem.
+                  Niche execution is defensible.
                 </p>
                 <p className="text-muted mt-1 font-mono text-xs">
-                  Risk: users may default to showroom designers. Product must produce a spec sheet, not a moodboard.
+                  Risk: users may default to showroom designers. Product must produce a spec sheet,
+                  not a moodboard.
                 </p>
               </div>
 
@@ -148,16 +164,20 @@ export default function PageContent() {
               <div className="border-border mb-5 border-t pt-4">
                 <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                   <span className="font-mono text-xs font-bold text-yellow-400">WATCH</span>
-                  <span className="font-mono text-xs font-semibold">Sleeping better despite time changes</span>
+                  <span className="font-mono text-xs font-semibold">
+                    Sleeping better despite time changes
+                  </span>
                   <span className="text-muted font-mono text-xs">[LOW confidence]</span>
                 </div>
                 <p className="text-muted mt-1.5 font-mono text-xs leading-relaxed">
-                  Competition GREEN for a narrowly scoped DST-only execution. Keyword cluster (DST policy +
-                  circadian tactics + sleep/anxiety) suggests a real behavior-change moment. Reddit inconclusive.
-                  Trend appeared 1 of last 7 days — not enough signal to commit yet.
+                  Competition GREEN for a narrowly scoped DST-only execution. Keyword cluster (DST
+                  policy + circadian tactics + sleep/anxiety) suggests a real behavior-change
+                  moment. Reddit inconclusive. Trend appeared 1 of last 7 days — not enough signal
+                  to commit yet.
                 </p>
                 <p className="text-muted mt-1 font-mono text-xs">
-                  Watch 1–2 more weeks. Upgrade to BUILD if days_seen reaches 4+ with consistent trajectory.
+                  Watch 1–2 more weeks. Upgrade to BUILD if days_seen reaches 4+ with consistent
+                  trajectory.
                 </p>
               </div>
 
@@ -165,12 +185,15 @@ export default function PageContent() {
               <div className="border-border border-t pt-4">
                 <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                   <span className="text-muted font-mono text-xs font-bold">SKIP</span>
-                  <span className="font-mono text-xs font-semibold">Deciding whether to buy stocks</span>
+                  <span className="font-mono text-xs font-semibold">
+                    Deciding whether to buy stocks
+                  </span>
                   <span className="text-muted font-mono text-xs">[HIGH competition]</span>
                 </div>
                 <p className="text-muted mt-1.5 font-mono text-xs leading-relaxed">
-                  5 existing tools found: Yahoo Finance, TradingView, Seeking Alpha, and 2 others. No Reddit pain
-                  signal to justify differentiation. LLM evaluation skipped — competition gate triggered.
+                  5 existing tools found: Yahoo Finance, TradingView, Seeking Alpha, and 2 others.
+                  No Reddit pain signal to justify differentiation. LLM evaluation skipped —
+                  competition gate triggered.
                 </p>
               </div>
             </div>
@@ -178,7 +201,8 @@ export default function PageContent() {
             {/* Footer stats */}
             <div className="border-border border-t px-6 py-3">
               <p className="text-muted font-mono text-xs">
-                4 more verdicts in the full briefing — plus Reddit excerpts, competition URLs, and product theses.
+                4 more verdicts in the full briefing — plus Reddit excerpts, competition URLs, and
+                product theses.
               </p>
             </div>
           </div>
