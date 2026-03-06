@@ -24,4 +24,7 @@ export const analytics = {
   track,
   newsletterSignup: () => track('newsletter_signup'),
   feedbackSubmit: () => track('feedback_submit'),
+  freeSignupSubmit: () => track('free_signup_submit'),
+  freeSignupSuccess: () => track('free_signup_success'),
+  paidCtaClick: () => track('paid_cta_click'),
 };

@@ -1,5 +1,5 @@
 {
-  "name": "your-project-name",
+  "name": "warranted",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
     "check-deps": "npx npm-check-updates"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "babel-plugin-react-compiler": "^1.0.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.576.0",
     "next": "^16.1.6",

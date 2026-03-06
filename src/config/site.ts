@@ -8,7 +8,8 @@ export const site = {
   // Base description — used in <meta description>, manifest, JSON-LD
   description:
     'A daily build briefing for indie hackers. Trending signals scored, Reddit pain validated, competition checked, BUILD or SKIP decision made.',
-  // Longer form for social cards
+  // Used as the <title> tag (homepage + fallback) AND social card title.
+  // MUST be 50–60 chars — site.name alone is too short for SEO.
   ogTitle: 'Warranted — Stop guessing. Start building the right thing.',
   ogDescription:
     'Every morning at 6am: trending signals scored, Reddit pain validated, competition checked, BUILD or SKIP decision made. You just execute.',

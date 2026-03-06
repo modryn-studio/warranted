@@ -26,7 +26,7 @@ Indie hackers and micro-SaaS founders who are tired of guessing what to build. T
 - Color mode: Dark mode base, no toggle (this is a tool for builders, used at 6 AM with coffee)
 - Accent color: Amber / Burnt Orange (#F97415) — semantic signal color, not a general accent. Reserved for: (a) BUILD verdict labels, (b) primary CTA buttons, (c) key data points (price, subscriber count, days_seen). Never as background fill or decoration. This prevents Bitcoin/Solana-orange drift and keeps amber reading as "this matters, pay attention."
 - Verdict label colors: BUILD = amber (#F97415). WATCH = muted yellow or neutral gray (not alarm-red — it's a holding pattern, not a failure). SKIP = dim gray. Colors reinforce meaning; don't use traffic-light red for SKIP (too alarming for what is just "not now").
-- Fonts: System font stack (Inter fallback) for body. Mono for scores, verdicts, and data labels — monospace reads as terminal output (evidence from a system), not marketing copy.
+- Fonts: System font stack (Inter fallback) for body. Mono for scores, verdicts, and data labels — monospace reads as terminal output (evidence from a system), not mdarketing copy.
 - Motion: None. This is a data product. Static, fast, scannable. Over-design signals "trying to look like more than you are" — this audience pattern-matches on it.
 - Avoid: No gradients, no glassmorphism, no decorative illustrations. No fake testimonials. No "as seen in" logos. No stock photos. Raw screenshots of real briefings only.
 
