@@ -58,14 +58,12 @@ export default function PageContent() {
             Every morning at 6am: trending signals scored, Reddit pain validated, competition
             checked, BUILD or SKIP decision made. You just execute.
           </p>
-        </section>
 
-        {/* ── Sample Verdict Block ── */}
-        <section className="border-border border-t py-16 md:py-20">
-          <p className="text-muted mb-6 font-mono text-xs tracking-widest uppercase">
-            Sample verdict — real pipeline output
-          </p>
-          <div className="border-border bg-surface border p-6">
+          {/* Real pipeline output — above the fold */}
+          <div className="border-border bg-surface mt-10 border p-6">
+            <p className="text-muted mb-4 font-mono text-xs tracking-widest uppercase">
+              Sample verdict — real pipeline output
+            </p>
             <div className="flex items-baseline gap-3">
               <span className="text-accent font-mono text-sm font-bold">BUILD</span>
               <span className="text-muted font-mono text-xs">confidence: 82%</span>
