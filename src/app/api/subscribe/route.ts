@@ -22,15 +22,15 @@ export async function POST(req: Request): Promise<Response> {
     }
 
     const resendKey = process.env.RESEND_API_KEY;
-    const audienceId = process.env.RESEND_AUDIENCE_ID_FREE;
+    const segmentId = process.env.RESEND_SEGMENT_ID_FREE;
 
     if (!resendKey) {
       log.warn(ctx.reqId, 'RESEND_API_KEY not configured');
       return log.end(ctx, Response.json({ error: 'Email service unavailable' }, { status: 503 }));
     }
 
-    if (!audienceId) {
-      log.warn(ctx.reqId, 'RESEND_AUDIENCE_ID_FREE not configured');
+    if (!segmentId) {
+      log.warn(ctx.reqId, 'RESEND_SEGMENT_ID_FREE not configured');
       return log.end(ctx, Response.json({ error: 'Email service unavailable' }, { status: 503 }));
     }
 
@@ -39,10 +39,10 @@ export async function POST(req: Request): Promise<Response> {
     await resend.contacts.create({
       email: body.email,
       unsubscribed: false,
-      audienceId,
+      segments: [{ id: segmentId }],
     });
 
-    log.info(ctx.reqId, 'Contact added to free audience', { audienceId });
+    log.info(ctx.reqId, 'Contact added to free segment', { segmentId });
     return log.end(ctx, Response.json({ ok: true }));
   } catch (error) {
     log.err(ctx, error);
