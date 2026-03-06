@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { analytics } from '@/lib/analytics';
+import { basePath } from '@/config/site';
 import { FeedbackTrigger } from '@/components/feedback-trigger';
 
 export default function PageContent() {
@@ -22,7 +23,7 @@ export default function PageContent() {
     analytics.freeSignupSubmit();
 
     try {
-      const res = await fetch('/api/subscribe', {
+      const res = await fetch(`${basePath}/api/subscribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

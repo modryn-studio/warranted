@@ -1,6 +1,10 @@
 // Single source of truth for all site-wide metadata.
 // /project-init fills this in from context.md + brand.md.
 // Every other file imports from here — never hardcode site metadata elsewhere.
+// basePath must match next.config.ts — used for client-side fetch calls that
+// bypass Next.js router (which normally prepends basePath automatically).
+export const basePath = '/tools/warranted';
+
 export const site = {
   name: 'Warranted',
   shortName: 'Warranted',
