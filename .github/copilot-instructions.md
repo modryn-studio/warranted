@@ -68,6 +68,46 @@ When adding a badge row (optional, for open source tools/libraries only):
 - Keep it to 3 badges max: typically license + CI status + live site
 - Apps (not libraries) should skip badges entirely
 
+## Tailwind v4
+
+This project uses Tailwind CSS v4. The rules are different from v3 — follow these exactly.
+
+**Design tokens live in `@theme`, not `:root`:**
+```css
+/* ✅ correct — generates text-accent, bg-surface, border-border, etc. */
+@theme {
+  --color-accent: #F97415;
+  --color-surface: #111111;
+  --color-border: #222222;
+  --color-muted: #666666;
+  --color-text: #e5e5e5;
+  --color-bg: #050505;
+  --font-heading: var(--font-sans);
+}
+
+/* ❌ wrong — :root creates CSS variables but NO utility classes */
+:root {
+  --color-accent: #F97415;
+}
+```
+
+**Use `(--color-*)` shorthand in class strings — never `[var(--color-*)]`:**
+```tsx
+// ✅ correct — TW v4 native shorthand
+<div className="border-(--color-border) bg-(--color-surface) text-(--color-muted)" />
+
+// ❌ wrong — v3 bracket notation, verbose and unnecessary in v4
+<div className="border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)]" />
+```
+
+If tokens are defined in `@theme`, you can also use the short utility names directly:
+```tsx
+// ✅ also correct when @theme is properly set up
+<div className="border-border bg-surface text-muted text-accent" />
+```
+
+Never add `tailwind.config.*` — v4 has no config file. All theme customization goes in `globals.css` under `@theme`.
+
 ## API Route Logging
 
 Every new API route (`app/api/**/route.ts`) MUST use `createRouteLogger` from `@/lib/route-logger`.
