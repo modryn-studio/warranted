@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     site: site.social.twitterHandle,
     creator: site.social.twitterHandle,
   },
-  manifest: '/manifest.json',
+  manifest: '/manifest.webmanifest',
 };
 
 export const viewport: Viewport = {

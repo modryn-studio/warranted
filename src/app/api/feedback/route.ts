@@ -95,7 +95,7 @@ export async function POST(req: Request): Promise<Response> {
       if (resendKey) {
         try {
           const resend = new Resend(resendKey);
-          const segmentId = process.env.RESEND_SEGMENT_ID;
+          const segmentId = process.env.RESEND_SEGMENT_ID_FREE;
           await resend.contacts.create({
             email: body.email!,
             unsubscribed: false,
