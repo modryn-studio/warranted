@@ -42,15 +42,15 @@ All API routes use `createRouteLogger` from `@/lib/route-logger`. All analytics 
 
 Required before any dev or deployment work:
 
-| Variable                          | Description                                     |
-| --------------------------------- | ----------------------------------------------- |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID`   | GA4 measurement ID — loaded in `layout.tsx`     |
-| `GMAIL_USER`                      | Gmail address for feedback widget SMTP          |
-| `GMAIL_APP_PASSWORD`              | Gmail app password (not account password)       |
+| Variable                          | Description                                                  |
+| --------------------------------- | ------------------------------------------------------------ |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID`   | GA4 measurement ID — loaded in `layout.tsx`                  |
+| `GMAIL_USER`                      | Gmail address for feedback widget SMTP                       |
+| `GMAIL_APP_PASSWORD`              | Gmail app password (not account password)                    |
 | `FEEDBACK_TO`                     | Email address to receive feedback (defaults to `GMAIL_USER`) |
-| `RESEND_API_KEY`                  | Resend API key for subscriber management        |
-| `RESEND_SEGMENT_ID_FREE`          | Resend segment ID for `warranted-free` segment  |
-| `NEXT_PUBLIC_STRIPE_PAYMENT_LINK` | Stripe Payment Link URL for paid CTA button     |
+| `RESEND_API_KEY`                  | Resend API key for subscriber management                     |
+| `RESEND_SEGMENT_ID_FREE`          | Resend segment ID for `warranted-free` segment               |
+| `NEXT_PUBLIC_STRIPE_PAYMENT_LINK` | Stripe Payment Link URL for paid CTA button                  |
 
 ## Analytics Events
 
