@@ -132,8 +132,8 @@ Check the codebase for:
 - [ ] `src/app/icon.png` exists (1024×1024 logomark)
 - [ ] `src/app/apple-icon.png` exists
 - [ ] OG title is 50–60 chars, description is 110–160 chars
-- [ ] `public/og-image.png` exists (1200×630px) OR `src/app/opengraph-image.tsx` exists (dynamic via `next/og`)
-- [ ] Key pages beyond home have per-page `opengraph-image.tsx` for unique social cards (flag if only root-level OG exists)
+- [ ] `src/app/opengraph-image.tsx` exists (homepage OG image, dynamic via `next/og`) -- **required**; `public/og-image.png` alone does NOT inject the image into metadata
+- [ ] Key pages beyond home (e.g. /result, /confirm) also have per-page `opengraph-image.tsx` for unique social cards
 - [ ] `src/config/site.ts` exists and is fully filled in (no TODO placeholder values)
 - [ ] `src/app/manifest.ts` exists (do NOT check for `public/manifest.json`)
 - [ ] `src/app/robots.ts` exists (do NOT check for `public/robots.txt`)
@@ -145,16 +145,24 @@ Report PASS / MISSING for each item with file paths for anything missing.
 
 ## Step 2: Manual Launch Steps (guide me through these)
 
-### Google Search Console
+﻿### Google Search Console
+GSC tracks authority at the root domain level. One Domain property per root domain covers all sub-paths automatically. Submit per-tool sitemaps to that same root property.
+
+**If your root domain is already verified in GSC:**
+Go to the root domain property → **Sitemaps** → submit `https://yourdomain.com/sitemap.xml`. Done.
+
+**If not yet verified:**
 1. Go to https://search.google.com/search-console
-2. Add property → Domain → enter your domain
+2. Add property → **Domain** → enter your root domain (e.g. `yourdomain.com`, no `https://`)
 3. Verify via DNS TXT record:
    - Vercel dashboard → click your **team name** (not a project) → left nav: **Domains**
    - Click the domain → **Advanced Settings** → **Add Record**
    - Type: TXT | Name: @ | Value: `google-site-verification=...` | TTL: 60
    - Wait 5–30 min, then click Verify in Search Console
-4. After verification → Sitemaps → submit `https://yourdomain.com/sitemap.xml`
+4. After verification → **Sitemaps** → submit `https://yourdomain.com/sitemap.xml`
 
+**Optional — per-tool URL Prefix property:**
+If you want isolated search performance data per tool (mirrors GA4 per-tool properties), add a **URL Prefix** property for the tool path (e.g. `https://yourdomain.com/tools/mytool`). Verification is automatic when the parent Domain property is already verified. Submit the tool's sitemap to this property too.
 ### Bing Webmaster Tools
 1. Go to https://www.bing.com/webmasters
 2. Sign in with Microsoft account
@@ -162,7 +170,10 @@ Report PASS / MISSING for each item with file paths for anything missing.
 4. Done (also covers Yahoo and DuckDuckGo which use Bing's index)
 
 ## Step 3: Validation
-Tell me to check these once the site is deployed:
-- **OG preview:** https://opengraph.xyz — paste the live URL, verify title 50–60 chars, description 110–160 chars, image 1200×630
-- **JSON-LD:** https://search.google.com/test/rich-results — should show "1 valid item detected"
-- **DNS propagation:** https://www.whatsmydns.net — check TXT record has propagated
+Tell me to check these once the site is deployed.
+
+> **Use the direct Vercel URL for all validation tools** (e.g. https://yourapp.vercel.app/tools/yourtool), not the canonical modrynstudio.com URL. The root path /tools/yourtool on modrynstudio.com is served by modryn-studio-v2’s static page -- your Next.js app only serves sub-paths via rewrite. The Vercel URL always serves your actual app.
+
+- **OG preview:** https://opengraph.xyz -- paste **direct Vercel URL**, verify title 50–60 chars, description 110–160 chars, image 1200×630
+- **JSON-LD:** https://search.google.com/test/rich-results -- paste **direct Vercel URL**, should show “1 valid item detected”
+- **DNS propagation:** https://www.whatsmydns.net -- check TXT record has propagated
