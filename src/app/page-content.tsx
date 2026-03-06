@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import Link from 'next/link';
 import { analytics } from '@/lib/analytics';
 import { FeedbackTrigger } from '@/components/feedback-trigger';
 
@@ -184,7 +185,7 @@ export default function PageContent() {
               onClick={() => analytics.paidCtaClick()}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent mt-8 inline-block h-12 px-10 font-mono text-sm leading-[3rem] font-bold text-white hover:opacity-90"
+              className="bg-accent mt-8 inline-block h-12 px-10 font-mono text-sm leading-12 font-bold text-white hover:opacity-90"
             >
               Subscribe — $19/mo
             </a>
@@ -202,12 +203,12 @@ export default function PageContent() {
             Built by Luke. Fueled by trendspy, Reddit, and too much coffee.
           </p>
           <div className="text-muted flex gap-6 font-mono text-xs">
-            <a href="/tools/warranted/privacy" className="hover:text-text">
+            <Link href="/tools/warranted/privacy" className="hover:text-text">
               Privacy
-            </a>
-            <a href="/tools/warranted/terms" className="hover:text-text">
+            </Link>
+            <Link href="/tools/warranted/terms" className="hover:text-text">
               Terms
-            </a>
+            </Link>
             <a
               href="https://x.com/lukehanner"
               target="_blank"
