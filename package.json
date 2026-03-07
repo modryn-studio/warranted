@@ -4,16 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run import-briefing && next build",
     "start": "next start",
     "lint": "next lint",
-    "check-deps": "npx npm-check-updates"
+    "check-deps": "npx npm-check-updates",
+    "import-briefing": "node scripts/import-briefing.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
+    "marked": "^12.0.2",
     "next": "^16.1.6",
     "nodemailer": "^8.0.1",
     "react": "^19.2.4",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
+    "@types/marked": "^6.0.0",
     "@types/node": "^25.3.5",
     "@types/nodemailer": "^7.0.11",
     "@types/react": "^19.2.14",
