@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { site } from '@/config/site';
 import PageContent from './page-content';
+import { BriefingSample } from '@/components/briefing-sample';
 
 export const metadata: Metadata = {
   title: site.ogTitle,
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <Suspense>
-      <PageContent />
+      <PageContent briefingSample={<BriefingSample />} />
     </Suspense>
   );
 }

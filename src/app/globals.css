@@ -30,3 +30,101 @@ body {
   background-color: rgb(249 116 21 / 0.3);
   color: white;
 }
+
+/* ── Briefing Content (GitHub-style markdown) ── */
+.briefing-content {
+  @apply font-mono text-sm p-6;
+}
+
+.briefing-content h1 {
+  @apply text-2xl font-bold mt-6 mb-4 pb-2 border-b border-border;
+}
+
+.briefing-content > h1:first-child {
+  @apply mt-0;
+}
+
+.briefing-content h2 {
+  @apply text-xl font-semibold mt-5 mb-3 pb-2 border-b border-border;
+}
+
+.briefing-content h3 {
+  @apply text-lg font-semibold mt-4 mb-2;
+}
+
+.briefing-content h4 {
+  @apply text-base font-semibold mt-3 mb-2;
+}
+
+.briefing-content p {
+  @apply my-3 leading-relaxed text-muted;
+}
+
+.briefing-content ul,
+.briefing-content ol {
+  @apply my-3 ml-6 text-muted;
+}
+
+.briefing-content li {
+  @apply my-1;
+}
+
+.briefing-content table {
+  @apply w-full border-collapse my-4;
+}
+
+.briefing-content th {
+  @apply border border-border bg-surface px-3 py-2 text-left font-semibold text-sm;
+}
+
+.briefing-content td {
+  @apply border border-border px-3 py-2 text-muted;
+}
+
+.briefing-content code {
+  @apply bg-surface px-1.5 py-0.5 rounded text-accent text-xs;
+}
+
+.briefing-content pre {
+  @apply bg-surface border border-border p-4 rounded my-4 overflow-x-auto;
+}
+
+.briefing-content pre code {
+  @apply bg-transparent px-0 py-0;
+}
+
+.briefing-content blockquote {
+  @apply border-l-4 border-accent pl-4 italic my-4 text-muted;
+}
+
+.briefing-content hr {
+  @apply border-border my-6;
+}
+
+.briefing-content a {
+  @apply text-accent hover:underline;
+}
+
+.briefing-content strong {
+  @apply font-bold text-text;
+}
+
+.briefing-content em {
+  @apply italic;
+}
+
+.briefing-content details {
+  @apply my-4 border border-border rounded;
+}
+
+.briefing-content summary {
+  @apply cursor-pointer px-4 py-2 font-semibold hover:bg-surface;
+}
+
+.briefing-content details[open] summary {
+  @apply border-b border-border;
+}
+
+.briefing-content details > *:not(summary) {
+  @apply px-4 py-2;
+}
